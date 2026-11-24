@@ -1,7 +1,19 @@
 # MindForecast
 
+[![CI](https://github.com/paulxg12/mindforecast/actions/workflows/ci.yml/badge.svg)](https://github.com/paulxg12/mindforecast/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 Forecasting global mental-health prevalence to 2030 from WHO / GBD country-year
 statistics.
+
+This repository contains two independent studies:
+
+| project | directory | question |
+|---|---|---|
+| **MindForecast** | `mindforecast/` | Will mental-health prevalence keep rising to 2030? |
+| **SkyClass** | `skyclass/` | Galaxy, star or quasar — and how much does redshift cheat? |
+
+Both are documented below and in [`skyclass/README.md`](skyclass/README.md).
 
 One model is trained across **205 countries x 5 disorders x 30 years**. The
 hard part of this dataset is that prevalence series are smooth, so a naive
@@ -42,6 +54,16 @@ Error by disorder for the best model:
 5. **Report** — figures plus a self-contained `artifacts/report.html`.
 
 ## Usage
+
+```bash
+pip install -e ".[dev]"     # package + console scripts + linter
+
+mindforecast run --cutoff 2012        # custom holdout
+mindforecast forecast KEN --disorder Depressive
+skyclass run --test-size 0.3 --seed 7
+```
+
+Or work from a pinned environment without installing the package:
 
 ```bash
 uv venv --python 3.12 .venv
@@ -90,3 +112,14 @@ artifacts/
 
 [`imtkaggleteam/mental-health`](https://www.kaggle.com/datasets/imtkaggleteam/mental-health)
 on Kaggle, derived from WHO / Global Burden of Disease study outputs.
+
+## Contributing
+
+Issues and pull requests are welcome — see [`CONTRIBUTING.md`](CONTRIBUTING.md).
+Changes that move a reported metric should update these tables and the
+regenerated `artifacts/` in the same commit.
+
+## License
+
+[MIT](LICENSE) © 2026 Prince Raymond Paul. The datasets keep their own terms;
+they are downloaded at run time and never redistributed here.

@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install ruff
+        run: pip install ruff
+      - name: Lint
+        run: ruff check .
+
+  smoke:
+    # Installs the package and drives both command line entry points. The full
+    # pipelines are not run here: they download datasets and take minutes, so
+    # they stay a local step (see CONTRIBUTING.md).
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install package
+        run: pip install -e .
+      - name: Import both packages
+        run: python -c "import mindforecast, skyclass; print('ok')"
+      - name: CLI help
+        run: |
+          mindforecast --help
+          skyclass --help

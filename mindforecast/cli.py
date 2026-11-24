@@ -5,8 +5,6 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-import pandas as pd
-
 from .data import load_prevalence
 from .features import add_features
 from .forecast import recursive_forecast
